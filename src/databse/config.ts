@@ -8,4 +8,5 @@ export const DatabaseConfig: TypeOrmModuleOptions = {
   database: 'devbyseb',
   entities: [__dirname + '/../**/*.entity{.ts,.js}'],
   synchronize: true,
+  logging:true
 };

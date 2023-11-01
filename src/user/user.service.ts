@@ -5,6 +5,7 @@ import { User } from './entities/user.entity';
 import {Repository} from 'typeorm';
 import {InjectRepository} from '@nestjs/typeorm'
 
+
 @Injectable()
 export class UserService {
   constructor(
@@ -14,6 +15,7 @@ export class UserService {
   create(createUserDto: Partial<User>) : Promise<User> {
     const user = this.userRepository.create(createUserDto);
     return this.userRepository.save(user);
+
   }
 
   findAll() {
@@ -29,6 +31,6 @@ export class UserService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} user`;
+    return this.userRepository.delete(id);
   }
 }

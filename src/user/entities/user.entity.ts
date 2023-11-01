@@ -1,15 +1,20 @@
-import {Entity,Column,PrimaryGeneratedColumn} from 'typeorm'
+import { Userproduct } from 'src/userproduct/entities/userproduct.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity()
-
-
 export class User {
     @PrimaryGeneratedColumn()
-    id:number;
+    id: number;
+
     @Column()
     firstname: string;
+
     @Column()
-    lastname:string;
+    lastname: string;
+
     @Column()
-    email:string;
+    email: string;
+
+    @OneToMany(() => Userproduct, userProduct => userProduct.user) // The property name should be user, not userProducts
+    userProducts: Userproduct[];
 }
