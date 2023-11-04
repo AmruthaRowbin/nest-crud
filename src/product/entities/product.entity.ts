@@ -11,8 +11,7 @@ export class Product {
     productqty:number;
     @Column()
     productprice:number;
-
-    @OneToMany(()=> Userproduct, userProduct=>userProduct.product)
-    userProducts:Userproduct[];
+    @OneToMany(() => Userproduct, userProduct => userProduct.product)
+    userProducts: Userproduct[];
     
 }

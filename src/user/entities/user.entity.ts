@@ -1,8 +1,10 @@
 import { Userproduct } from 'src/userproduct/entities/userproduct.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { BeforeInsert,BaseEntity,Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import * as bcrypt from 'bcryptjs';
+
 
 @Entity()
-export class User {
+export class User extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -15,6 +17,18 @@ export class User {
     @Column()
     email: string;
 
+    @Column()
+    password:string;
+
+    @BeforeInsert()
+    async hashPassword(){
+        this.password=await bcrypt.hash(this.password,8)
+    }
+
+    async validatePassword(password:string):Promise<boolean>
+{
+    return bcrypt.compare(password,this.password)
+}
     @OneToMany(() => Userproduct, userProduct => userProduct.user) // The property name should be user, not userProducts
     userProducts: Userproduct[];
 }

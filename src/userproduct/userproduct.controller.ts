@@ -12,6 +12,7 @@ export class UserproductController {
   @Post()
   async create(@Body() createUserproductDto: CreateUserproductDto) {
     const userproduct = await this.userproductService.create(createUserproductDto);
+    
     return userproduct;
   }
 
@@ -19,6 +20,7 @@ export class UserproductController {
 async getUsersWithProducts() {
   return this.userproductService.getUsersWithProducts();
 }
+
 
   
 
