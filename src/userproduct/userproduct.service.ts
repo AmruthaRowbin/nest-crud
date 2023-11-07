@@ -2,21 +2,21 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserproductDto } from './dto/create-userproduct.dto';
 import { UpdateUserproductDto } from './dto/update-userproduct.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Userproduct } from './entities/userproduct.entity';
+import { Userproducts } from './entities/userproduct.entity';
 import {Repository} from 'typeorm'
-import { Product } from 'src/product/entities/product.entity';
+import { Products } from 'src/product/entities/product.entity';
 import { User } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class UserproductService {
  constructor(
-  @InjectRepository(Userproduct) private userProductRepository: Repository<Userproduct>,
+  @InjectRepository(Userproducts) private userProductRepository: Repository<Userproducts>,
   @InjectRepository(User) private userRepository: Repository<User>, 
-    @InjectRepository(Product) private productRepository: Repository<Product>
+    @InjectRepository(Products) private productRepository: Repository<Products>
 ){}
 
 
-async create(createUserproductDto: CreateUserproductDto): Promise<Userproduct> {
+async create(createUserproductDto: CreateUserproductDto): Promise<Userproducts> {
   
   const user = await this.userRepository.findOne({
     where: { id: createUserproductDto.userId }
@@ -26,7 +26,7 @@ async create(createUserproductDto: CreateUserproductDto): Promise<Userproduct> {
   });
 
  
-  const userproduct = new Userproduct();
+  const userproduct = new Userproducts();
   userproduct.user = user; 
   userproduct.product = product; 
 
@@ -34,7 +34,7 @@ async create(createUserproductDto: CreateUserproductDto): Promise<Userproduct> {
   return this.userProductRepository.save(userproduct);
 }
 
- async getUsersWithProducts(): Promise<Userproduct[]> {
+ async getUsersWithProducts(): Promise<Userproducts[]> {
   // return this.userProductRepository.query('SELECT * FROM userproduct as up LEFT JOIN user on up.userId=user.id Left Join product as p on up.productId=p.id'); 
   return this.userProductRepository.find({ relations: ['user','product'] });    
 }

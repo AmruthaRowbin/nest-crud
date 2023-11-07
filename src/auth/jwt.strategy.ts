@@ -9,13 +9,14 @@ export class JwtStrategy extends PassportStrategy(Strategy,"jwt") {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: "ammu1234567", 
-      signOptions: { expiresIn: '1h' }
+      signOptions: { expiresIn: '1s' }
     });
+    
   }
 
   async validate(payload:{userId:number}){
     return{
-      userId:payload.userId
+      userId:payload.userId      
     }
   }
 }

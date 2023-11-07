@@ -1,9 +1,9 @@
-import { Product } from 'src/product/entities/product.entity';
+import { Products } from 'src/product/entities/product.entity';
 import { User } from 'src/user/entities/user.entity';
 import { Entity, ManyToOne, PrimaryGeneratedColumn,JoinColumn } from 'typeorm'
 
 @Entity()
-export class Userproduct {
+export class Userproducts {
     @PrimaryGeneratedColumn()
     id: number;
  
@@ -12,9 +12,9 @@ export class Userproduct {
     @JoinColumn({name:'userId'})
     user: User;
 
-    @ManyToOne(() => Product, product => product.userProducts)
+    @ManyToOne(() => Products, product => product.userProducts)
     @JoinColumn({name:"productId"})
-    product: Product
+    product: Products
 }
 
 

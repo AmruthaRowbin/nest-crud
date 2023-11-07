@@ -9,7 +9,7 @@ import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class AuthService {
-  constructor(private usersService: UserService, private jwtService: JwtService) { }
+  constructor(private Userervice: UserService, private jwtService: JwtService) { }
 
   async login(authLoginDto: AuthLoginDto) {
     const user = await this.validateUser(authLoginDto);
@@ -38,7 +38,7 @@ export class AuthService {
   async validateUser(authLoginDto: AuthLoginDto) {
     const { email, password } = authLoginDto;
 
-  const user = await this.usersService.findByEmail(email);
+  const user = await this.Userervice.findByEmail(email);
 
     if (!user) {
       throw new UnauthorizedException('Invalid email or password');

@@ -1,8 +1,8 @@
-import { Userproduct } from 'src/userproduct/entities/userproduct.entity';
+import { Userproducts } from 'src/userproduct/entities/userproduct.entity';
 import {Entity ,Column,PrimaryGeneratedColumn,OneToMany} from'typeorm' 
 
 @Entity()
-export class Product {
+export class Products {
     @PrimaryGeneratedColumn()
     id:number;
     @Column()
@@ -11,7 +11,7 @@ export class Product {
     productqty:number;
     @Column()
     productprice:number;
-    @OneToMany(() => Userproduct, userProduct => userProduct.product)
-    userProducts: Userproduct[];
+    @OneToMany(() => Userproducts, userProduct => userProduct.product)
+    userProducts: Userproducts[];
     
 }

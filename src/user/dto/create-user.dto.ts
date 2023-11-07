@@ -9,6 +9,8 @@ export class CreateUserDto {
     @IsString({message:"lastname should be string"})
     @IsNotEmpty({message:"last name should be include"})
     lastname:string
+
+    token:string
   
 
     @IsEmail()

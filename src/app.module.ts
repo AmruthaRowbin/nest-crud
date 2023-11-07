@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { LoggerMiddleware } from './logger/logger.middleware';
 import { JwtStrategy } from './auth/jwt.strategy';
 
+
 @Module({
   imports: [TypeOrmModule.forRoot(DatabaseConfig),UserModule, ProductModule, UserproductModule, AuthModule],
   controllers: [AppController],
@@ -17,6 +18,6 @@ import { JwtStrategy } from './auth/jwt.strategy';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware).forRoutes({ path: 'auth', method: RequestMethod.POST })
+    consumer.apply().forRoutes()
   }
 }

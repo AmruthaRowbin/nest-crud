@@ -1,4 +1,4 @@
-import { Userproduct } from 'src/userproduct/entities/userproduct.entity';
+import { Userproducts } from 'src/userproduct/entities/userproduct.entity';
 import { BeforeInsert,BaseEntity,Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 
@@ -20,6 +20,9 @@ export class User extends BaseEntity {
     @Column()
     password:string;
 
+    @Column()
+    token:string;
+
     @BeforeInsert()
     async hashPassword(){
         this.password=await bcrypt.hash(this.password,8)
@@ -29,6 +32,6 @@ export class User extends BaseEntity {
 {
     return bcrypt.compare(password,this.password)
 }
-    @OneToMany(() => Userproduct, userProduct => userProduct.user) // The property name should be user, not userProducts
-    userProducts: Userproduct[];
+    @OneToMany(() => Userproducts, userProduct => userProduct.user) // The property name should be user, not userProducts
+    userProducts: Userproducts[];
 }
