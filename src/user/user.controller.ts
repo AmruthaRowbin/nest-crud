@@ -1,4 +1,4 @@
-import { Request,Controller, Get, Post, Body, Patch, Param, Delete ,UsePipes, ValidationPipe, ParseIntPipe ,UseGuards} from '@nestjs/common';
+import { Request, Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, ParseIntPipe, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -6,17 +6,19 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import * as crypto from 'crypto';
 import { AuthGuard } from 'src/middleware/auth.middleware';
 import { LoginDto } from './dto/login-user.dto';
+import { BeforeLogin } from 'src/middleware/beforeLogin.middleware';
+
 
 
 @Controller('user')
 export class UserController {
   private generatedStrings: Set<string> = new Set();
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
-  @Post() 
+  @Post()
   @UsePipes(ValidationPipe)
   create(@Body() createUserDto: CreateUserDto) {
-    
+
     return this.userService.create(createUserDto);
 
   }
@@ -27,11 +29,11 @@ export class UserController {
     return this.userService.findAll();
   }
 
- 
+
   @UseGuards(AuthGuard)
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id:number){
-  
+  findOne(@Param('id', ParseIntPipe) id: number) {
+
     return this.userService.findOne(id);
   }
 
@@ -45,26 +47,13 @@ export class UserController {
   }
 
   @Patch(':id')
-  update(@Param('id',ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto) {
+  update(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(id, updateUserDto);
   }
 
   @Delete(':id')
-  remove(@Param('id',ParseIntPipe) id: number) {
+  remove(@Param('id', ParseIntPipe) id: number) {
     return this.userService.remove(id);
   }
 
-
-  @Post('login')
-  async login(@Body() loginDto:LoginDto){
-    const user = await this.userService.login(loginDto);
- 
-    if (user) {
-      // Authentication successful
-      return { message: 'Login successful', user };
-    } else {
-      // Authentication failed
-      return { message: 'Login failed', user: null };
-  }
-}
 }
