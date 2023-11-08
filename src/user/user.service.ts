@@ -25,7 +25,9 @@ export class UserService {
     });
 
     if (existingUser) {
-      throw new ConflictException('A user with the same email already exists');
+  
+       throw new ConflictException('A user with the same email already exists');
+      
     }
 
     const user = this.userRepository.create(createUserDto);
